@@ -1,0 +1,16 @@
+module decrypt(clk,message,key,ciphertext,rst);
+input clk;
+input rst;
+input [7:0] ciphertext,key;
+output [7:0] message;
+reg [7:0]message;
+reg [7:0] x,y,z;
+always @(posedge clk)
+ begin
+ x = ciphertext ^key;
+ y = ~x;
+ z = ~y+1;
+ message = (z-key)%128;
+end
+
+endmodule
