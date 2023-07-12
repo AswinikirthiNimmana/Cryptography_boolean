@@ -1,0 +1,39 @@
+module decrypt_tb();
+reg clk=1;
+reg rst=0;
+reg [7:0] key;
+reg [7:0]ciphertext;
+wire [7:0] message;
+reg [7:0]mem[0:22];
+integer i;
+integer fp;
+decrypt dut(.clk(clk),.key(key),.message(message),.ciphertext(ciphertext),.rst(rst));
+ always
+ #10clk= ~clk;
+  initial
+ begin
+ #10
+ $readmemh("encrypt.mem",mem);
+ fp = $fopen("decrypted.txt","w");
+ for(i=0;i<23;i=i+1)
+  begin
+ #10key = 45;
+ #10 ciphertext = mem[i];
+ $fwrite(fp,"%h",message[i]);
+ $display("cipherdata:%c",mem[i]);
+ end
+ end
+ //initial begin
+ 
+ //end
+ initial
+ begin
+ $monitor("dencrypted = %c",message);
+ end
+initial 
+ begin
+ #1500
+ $finish;
+ end
+
+endmodule
