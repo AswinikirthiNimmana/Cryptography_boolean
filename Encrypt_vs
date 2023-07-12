@@ -1,0 +1,16 @@
+`timescale 1ns / 1p
+module encrypt(clk,key,message,ciphertext,rst );
+input clk;
+input rst;
+input [7:0]key,message;
+output [7:0]ciphertext;
+reg [7:0]ciphertext;
+reg [7:0]x,y,z;
+always@(posedge clk)
+begin
+x=message+key; // adding of the key value
+y=~(x)+1;    // converting into two's compliment
+z=~y;         // converting to 1'compliment
+ciphertext=z^key;  // ex-or operation performing
+end
+endmodule
